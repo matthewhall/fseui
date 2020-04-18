@@ -9,19 +9,26 @@
       <Card
         class="mb-10">
         <CardContent>
-          <div>
+          <form>
             <input
-              class="border border-grey-300 rounded p-2 mr-3"
+              v-model="settings.host"
+              class="border border-grey-300 rounded p-2 mr-3 text-lg leading-none"
               type="text"
-              placeholder="localhost" />
+              :placeholder="settings.host" />
             <input
-              class="border border-grey-300 rounded p-2 mr-3 w-20"
+              v-model="settings.port"
+              class="border border-grey-300 rounded p-2 mr-3 w-20 text-lg leading-none"
+              type="number"
+              :placeholder="settings.port" />
+            <input
+              v-model="settings.projectId"
+              class="border border-grey-300 rounded p-2 mr-3 text-lg leading-none"
               type="text"
-              placeholder="8080" />
+              placeholder="my-project" />
             <Button>
               Go
             </Button>
-          </div>
+          </form>
         </CardContent>
       </Card>
       <h2
@@ -38,6 +45,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+
 import Button from './components/Button.vue';
 import Card from './components/Card.vue';
 import CardContent from './components/CardContent.vue';
@@ -49,10 +58,10 @@ export default {
     Card,
     CardContent
   },
-  methods: {
-    click(event) {
-      console.log('click', event);
-    }
+  computed: {
+    ...mapState([
+      'settings'
+    ])
   }
 }
 </script>
