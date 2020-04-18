@@ -51,6 +51,8 @@ import Button from './components/Button.vue';
 import Card from './components/Card.vue';
 import CardContent from './components/CardContent.vue';
 
+import { getDocuments } from './services/firestore.js';
+
 export default {
   name: 'App',
   components: {
@@ -62,6 +64,13 @@ export default {
     ...mapState([
       'settings'
     ])
+  },
+  methods: {
+    async go() {
+      const documents = await getDocuments();
+
+      console.log(documents);
+    }
   }
 }
 </script>
