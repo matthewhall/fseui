@@ -41,7 +41,14 @@
       </h2>
       <Card>
         <CardContent>
-          <p>Blah.</p>
+          <ul
+            v-if="firestore.documents.length">
+            <li
+              v-for="doc in firestore.documents"
+              :key="doc.name">
+              {{ doc }}
+            </li>
+          </ul>
         </CardContent>
       </Card>
     </main>
@@ -49,13 +56,13 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 import Button from './components/Button.vue';
 import Card from './components/Card.vue';
 import CardContent from './components/CardContent.vue';
 
-import { getDocuments } from './services/firestore.js';
+import { GET_DOCUMENTS } from './store/action-types.js';
 
 export default {
   name: 'App',
@@ -66,14 +73,21 @@ export default {
   },
   computed: {
     ...mapState([
-      'settings'
+      'settings',
+      'firestore'
     ])
   },
   methods: {
+    ...mapActions([
+      GET_DOCUMENTS
+    ]),
     async go() {
-      const documents = await getDocuments();
-
-      console.log(documents);
+      await this.GET_DOCUMENTS();
+    }
+  },
+  created() {
+    if (this.settings.host && this.settings.port && this.settings.projectId) {
+      this.go();
     }
   }
 }
