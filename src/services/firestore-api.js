@@ -2,18 +2,8 @@ import axios from 'axios';
 
 import store from '../store';
 
-export const getBaseApiPath = (settings) => {
-  const { host, port, projectId } = settings;
-
-  if (!host || !port || !projectId) {
-    return;
-  }
-
-  return `http://${host}:${port}/v1/projects/${projectId}/databases/(default)/`;
-}
-
 export const getDocuments = async (path = 'documents/') => {
-  const basePath = getBaseApiPath(store.state.settings);
+  const basePath = store.getters.baseApiPath(store.state);
 
   if (!basePath) {
     return;
@@ -24,6 +14,22 @@ export const getDocuments = async (path = 'documents/') => {
     const documents = response.data.documents;
 
     return documents;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const deleteDocument = async (path) => {
+  const basePath = store.getters.baseApiPath(store.state);
+
+  if (!basePath || !path) {
+    return;
+  }
+
+  try {
+    const response = await axios.delete(`${basePath}documents/${path}`);
+
+    return response;
   } catch (err) {
     console.error(err);
   }
