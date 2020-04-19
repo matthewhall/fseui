@@ -9,7 +9,6 @@ const actions = {
     try {
       const documents = await getDocuments(payload);
 
-      console.log(documents);
       context.commit(SET_DOCUMENTS, documents);
     } catch (err) {
       console.error(err);
