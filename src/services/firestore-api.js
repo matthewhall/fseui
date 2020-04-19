@@ -25,6 +25,6 @@ export const getDocuments = async (path = 'documents/') => {
 
     return documents;
   } catch (err) {
-    return new Error(err);
+    console.error(err);
   }
 }

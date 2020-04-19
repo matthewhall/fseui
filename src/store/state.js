@@ -2,6 +2,9 @@ export default {
   settings: {
     host: 'localhost',
     port: 8080,
-    projectId: undefined
+    projectId: 'staging-potato-career-dev'
+  },
+  firestore: {
+    documents: []
   }
 }
