@@ -2,3 +2,8 @@ html {
   color: rgba(0, 0, 0, .87);
   @apply font-base leading-relaxed text-sm;
 }
+
+svg {
+  display: inline-block;
+  fill: currentColor;
+}

@@ -4,6 +4,7 @@ module.exports = {
       black: '#333',
       white: '#fff',
       grey: {
+        50: '#fafafa',
         100: '#f5f5f5',
         200: '#eee',
         300: '#e0e0e0',

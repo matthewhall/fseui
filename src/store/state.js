@@ -5,6 +5,7 @@ export default {
     projectId: 'staging-potato-career-dev'
   },
   firestore: {
+    currentDocument: '/',
     documents: []
   }
 }
