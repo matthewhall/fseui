@@ -9,7 +9,8 @@
       <Card
         class="mb-10">
         <CardContent>
-          <form>
+          <form
+            class="flex">
             <input
               v-model="settings.host"
               class="border border-grey-300 rounded p-2 mr-3 text-lg leading-none"
@@ -22,11 +23,14 @@
               :placeholder="settings.port" />
             <input
               v-model="settings.projectId"
-              class="border border-grey-300 rounded p-2 mr-3 text-lg leading-none"
+              class="flex-1 border border-grey-300 rounded p-2 mr-3 text-lg leading-none"
               type="text"
-              placeholder="my-project" />
+              placeholder="my-awesome-project-id" />
             <Button>
-              Go
+              <span
+                @click.prevent="go">
+                Go
+              </span>
             </Button>
           </form>
         </CardContent>
