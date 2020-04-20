@@ -7,7 +7,7 @@
         v-for="(crumb, index) in crumbs"
         :key="crumb"
         :class="{
-          'max-w-xs overflow-hidden': index > 0
+          'max-w-xs overflow-hidden': crumb !== ''
         }">
         <Crumb
           class="crumbs__crumb"
