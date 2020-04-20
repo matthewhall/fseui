@@ -20,9 +20,9 @@
 </template>
 
 <script>
-import IconBase from './icons/IconBase.vue';
-import IconHome from './icons/IconHome.vue';
-import IconNavigateNext from './icons/IconNavigateNext.vue';
+import IconBase from '../../../Icons/IconBase';
+import IconHome from '../../../Icons/IconHome';
+import IconNavigateNext from '../../../Icons/IconNavigateNext';
 
 export default {
   name: 'Crumb',

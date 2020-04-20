@@ -16,11 +16,11 @@
 </template>
 
 <script>
-import Crumbs from './Crumbs.vue';
-import Panels from './Panels.vue';
-import CollectionsPanel from './CollectionsPanel.vue';
-import DocumentsPanel from './DocumentsPanel.vue';
-import FieldsPanel from './FieldsPanel.vue';
+import Crumbs from '../Crumbs';
+import Panels from '../Panels';
+import CollectionsPanel from '../CollectionsPanel';
+import DocumentsPanel from '../DocumentsPanel';
+import FieldsPanel from '../FieldsPanel';
 
 export default {
   name: 'DataViewer',

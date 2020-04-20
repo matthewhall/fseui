@@ -38,14 +38,14 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import Button from './Button.vue';
-import Card from './Card.vue';
-import CardContent from './CardContent.vue';
+import Button from '../../Button';
+import Card from '../../Card';
+import CardContent from '../../CardContent';
 
-import { GET_DOCUMENTS } from '../store/action-types.js';
+import { GET_DOCUMENTS } from '../../../store/action-types.js';
 
 export default {
-  name: 'Settings',
+  name: 'SectionSettings',
   components: {
     Button,
     Card,

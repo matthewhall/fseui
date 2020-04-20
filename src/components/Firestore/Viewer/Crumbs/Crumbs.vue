@@ -21,7 +21,7 @@
 <script>
 import { mapState } from 'vuex';
 
-import Crumb from './Crumb.vue';
+import Crumb from '../Crumb';
 
 export default {
   name: 'Crumbs',

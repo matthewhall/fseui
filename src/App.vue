@@ -2,9 +2,9 @@
   <div
     class="app max-w-screen-xl m-auto">
     <main>
-      <Settings
+      <SectionSettings
         class="mb-10" />
-      <Data />
+      <SectionData />
       <div class="bg-white mt-8">
         <ul
           v-if="firestore.documents.length">
@@ -22,14 +22,14 @@
 <script>
 import { mapState } from 'vuex';
 
-import Data from './components/Data.vue';
-import Settings from './components/Settings.vue';
+import SectionData from './components/Firestore/SectionData';
+import SectionSettings from './components/Firestore/SectionSettings';
 
 export default {
   name: 'App',
   components: {
-    Data,
-    Settings
+    SectionData,
+    SectionSettings
   },
   computed: {
     ...mapState([

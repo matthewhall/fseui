@@ -13,11 +13,11 @@
 <script>
 import { mapState } from 'vuex';
 
-import Card from './Card.vue';
-import DataViewer from './DataViewer.vue';
+import Card from '../../Card';
+import DataViewer from '../Viewer/DataViewer';
 
 export default {
-  name: 'Data',
+  name: 'SectionData',
   components: {
     Card,
     DataViewer
