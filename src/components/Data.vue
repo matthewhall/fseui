@@ -5,17 +5,7 @@
       Data
     </h2>
     <Card>
-      <DataTable />
-      <CardContent>
-        <ul
-          v-if="firestore.documents.length">
-          <li
-            v-for="doc in firestore.documents"
-            :key="doc.name">
-            {{ doc }}
-          </li>
-        </ul>
-      </CardContent>
+      <DataViewer />
     </Card>
   </div>
 </template>
@@ -24,15 +14,13 @@
 import { mapState } from 'vuex';
 
 import Card from './Card.vue';
-import CardContent from './CardContent.vue';
-import DataTable from './DataTable.vue';
+import DataViewer from './DataViewer.vue';
 
 export default {
   name: 'Data',
   components: {
     Card,
-    CardContent,
-    DataTable
+    DataViewer
   },
   computed: {
     ...mapState([

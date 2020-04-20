@@ -2,11 +2,15 @@
   <div
     class="crumbs bg-grey-50 border-b border-navy-20">
     <ul
-      class="flex pl-6 pr-6 pt-5 pb-4">
+      class="flex pl-6 pr-6 pt-5 pb-4 overflow-hidden">
       <li
         v-for="(crumb, index) in crumbs"
-        :key="crumb">
+        :key="crumb"
+        :class="{
+          'max-w-xs overflow-hidden': index > 0
+        }">
         <Crumb
+          class="crumbs__crumb"
           :text="crumb"
           :index="index" />
       </li>
@@ -30,6 +34,7 @@ export default {
     ]),
     crumbs() {
       return this.firestore.currentDocument.split('/')
+        // Removes any empty crumbs apart from the first, which is always Home.
         .filter((item, index) => index === 0 || item);
     }
   }

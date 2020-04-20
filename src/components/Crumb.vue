@@ -1,6 +1,6 @@
 <template>
   <div
-    class="crumb text-grey-600">
+    class="crumb text-grey-600 overflow-hidden whitespace-no-wrap text-ellipsis max-w-full">
     <IconBase
       v-if="text === ''">
       <IconHome />
@@ -9,6 +9,8 @@
       v-else>
       <IconBase
         v-if="index > 0"
+        :width="18"
+        :height="18"
         class="ml-2 mr-1">
         <IconNavigateNext />
       </IconBase>
