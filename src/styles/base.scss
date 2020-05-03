@@ -1,6 +1,6 @@
 html {
   color: rgba(0, 0, 0, .87);
-  @apply font-base leading-relaxed text-sm;
+  @apply font-base leading-relaxed text-sm antialiased;
 }
 
 svg {

@@ -51,7 +51,8 @@ module.exports = {
     },
     fontFamily: {
       base: ['Roboto', '"Helvetica Neue"', 'sans-serif'],
-      secondary: ['"Google Sans"', '"Helvetica Neue"', 'sans-serif']
+      secondary: ['"Google Sans"', '"Helvetica Neue"', 'sans-serif'],
+      mono: ['"Roboto Mono"', 'monospace']
     },
     screens: {
       sm: '320px',

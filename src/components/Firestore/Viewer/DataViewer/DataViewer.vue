@@ -1,26 +1,40 @@
 <template>
   <div
-    class="data-table">
+    class="data-viewer flex flex-col">
     <Crumbs
-      class="data-table__crumbs" />
+      class="data-viewer__crumbs" />
     <Panels
-      class="data-table__panels">
+      class="data-viewer__panels flex-1">
       <CollectionsPanel
-        class="panels__collections" />
+        class="data-viewer__panel"
+        :collection-ids="collectionIds"
+        @click:collection-item="handleCollectionItemClick" />
       <DocumentsPanel
-        class="panels__documents" />
+        class="data-viewer__panel border-l border-navy-20" />
       <FieldsPanel
-        class="panels__fields" />
+        class="data-viewer__panel border-l border-navy-20" />
     </Panels>
   </div>
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex';
+
 import Crumbs from '../Crumbs';
 import Panels from '../Panels';
 import CollectionsPanel from '../CollectionsPanel';
 import DocumentsPanel from '../DocumentsPanel';
 import FieldsPanel from '../FieldsPanel';
+
+import {
+  getCollectionIds,
+  getDocuments
+} from '../../../../services/firestore-api.js';
+
+import {
+  SET_CURRENT_PATH,
+  SET_DATA_AT_PATH
+} from '../../../../store/mutation-types.js';
 
 export default {
   name: 'DataViewer',
@@ -30,6 +44,53 @@ export default {
     CollectionsPanel,
     DocumentsPanel,
     FieldsPanel
+  },
+  computed: {
+    ...mapState([
+      'firestore'
+    ]),
+    collectionIds() {
+      return this.firestore.data.collections ?
+        Object.keys(this.firestore.data.collections) : [];
+    }
+  },
+  async mounted() {
+    const collections = await getCollectionIds();
+    console.log(collections);
+
+    this.SET_DATA_AT_PATH({
+      path: this.firestore.currentPath,
+      data: collections
+    });
+  },
+  methods: {
+    ...mapMutations([
+      SET_CURRENT_PATH,
+      SET_DATA_AT_PATH
+    ]),
+    async handleCollectionItemClick(id) {
+      this.SET_CURRENT_PATH(id);
+
+      const path = this.firestore.currentPath;
+      const documents = await getDocuments(path);
+
+      console.log(documents);
+    }
   }
 }
 </script>
+
+<style lang="scss">
+  .data-viewer {
+    height: calc(100vh - 280px);
+    min-height: 400px;
+
+    &__panel {
+      width: 27%;
+
+      &:nth-of-type(n + 3):last-of-type {
+        width: 46%;
+      }
+    }
+  }
+</style>

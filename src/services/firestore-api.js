@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axiosInstance from './axios.js';
 
 import store from '../store';
 
-export const getDocuments = async (path = 'documents/') => {
+export const getCollectionIds = async (path = 'documents') => {
   const basePath = store.getters.baseApiPath(store.state);
 
   if (!basePath) {
@@ -10,8 +10,32 @@ export const getDocuments = async (path = 'documents/') => {
   }
 
   try {
-    const response = await axios.get(`${basePath}${path}`);
-    const documents = response.data.documents;
+    const response =
+      await axiosInstance.post(`${basePath}${path}:listCollectionIds`);
+    const collectionIds = response.data.collectionIds;
+    const collections = {};
+
+    for (let i = 0; i < collectionIds.length; i++) {
+      collections[collectionIds[i]] = {};
+    }
+
+    return { collections };
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const getDocuments = async (path = '/') => {
+  const basePath = store.getters.baseApiPath(store.state);
+  const pathPrefix = 'documents';
+
+  if (!basePath) {
+    return;
+  }
+
+  try {
+    const response = await axiosInstance.get(`${basePath}${pathPrefix}${path}`);
+    const documents = response.data;
 
     return documents;
   } catch (err) {
@@ -27,7 +51,7 @@ export const deleteDocument = async (path) => {
   }
 
   try {
-    const response = await axios.delete(`${basePath}documents/${path}`);
+    const response = await axiosInstance.delete(`${basePath}documents/${path}`);
 
     return response;
   } catch (err) {

@@ -1,1 +1,2 @@
 export const GET_DOCUMENTS = 'GET_DOCUMENTS';
+export const APPLY_SETTINGS = 'APPLY_SETTINGS';

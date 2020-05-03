@@ -1,6 +1,6 @@
 <template>
   <div
-    class="fields-panel">
+    class="fields-panel p-6 ">
     <p>Fields panel.</p>
   </div>
 </template>

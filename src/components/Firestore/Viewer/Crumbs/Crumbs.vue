@@ -33,7 +33,7 @@ export default {
       'firestore'
     ]),
     crumbs() {
-      return this.firestore.currentDocument.split('/')
+      return this.firestore.currentPath.split('/')
         // Removes any empty crumbs apart from the first, which is always Home.
         .filter((item, index) => index === 0 || item);
     }

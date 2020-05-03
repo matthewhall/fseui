@@ -1,12 +1,12 @@
 <template>
   <div
-    class="flex items-stretch panels">
+    class="bg-grey-50 border-b border-navy-20">
     <slot />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Panels'
+  name: 'PanelHeader'
 }
 </script>

@@ -2,10 +2,12 @@ export default {
   settings: {
     host: 'localhost',
     port: 8080,
-    projectId: 'staging-potato-career-dev'
+    projectId: 'staging-potato-career-dev',
+    database: '(default)'
   },
   firestore: {
-    currentDocument: '/',
+    currentPath: '/',
+    data: [],
     documents: []
   }
 }
