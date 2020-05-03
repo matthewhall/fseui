@@ -2,6 +2,10 @@
   <div
     class="app max-w-screen-xl m-auto">
     <main>
+      <h1
+        class="font-secondary font-medium text-4xl text-navy-600 mb-8">
+        Firestore emulator data
+      </h1>
       <SectionSettings
         class="mb-10" />
       <SectionData />
