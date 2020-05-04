@@ -9,7 +9,8 @@
       <SectionSettings
         class="mb-10" />
       <SectionData />
-      <div class="bg-white mt-8">
+      <div
+        class="bg-white mt-8">
         <ul
           v-if="firestore.documents.length">
           <li

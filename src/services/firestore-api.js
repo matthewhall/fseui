@@ -2,6 +2,8 @@ import axiosInstance from './axios.js';
 
 import store from '../store';
 
+import { generateCollectionsFromDocsList } from '../utils/docs.js';
+
 export const getCollectionIds = async (path = 'documents') => {
   const basePath = store.getters.baseApiPath(store.state);
 
@@ -38,6 +40,17 @@ export const getDocuments = async (path = '/') => {
     const documents = response.data;
 
     return documents;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export const getCollections = async (path = '/') => {
+  try {
+    const documents = await getDocuments(path);
+    const collections = generateCollectionsFromDocsList(documents);
+
+    return collections;
   } catch (err) {
     console.error(err);
   }

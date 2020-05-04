@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex';
+import { mapActions, mapState, mapMutations } from 'vuex';
 
 import Crumbs from '../Crumbs';
 import Panels from '../Panels';
@@ -26,10 +26,7 @@ import CollectionsPanel from '../CollectionsPanel';
 import DocumentsPanel from '../DocumentsPanel';
 import FieldsPanel from '../FieldsPanel';
 
-import {
-  getCollectionIds,
-  getDocuments
-} from '../../../../services/firestore-api.js';
+import { GET_COLLECTIONS } from '../../../../store/action-types.js';
 
 import {
   SET_CURRENT_PATH,
@@ -50,20 +47,20 @@ export default {
       'firestore'
     ]),
     collectionIds() {
-      return this.firestore.data.collections ?
-        Object.keys(this.firestore.data.collections) : [];
+      if (!this.firestore.data || !this.firestore.data.collections) {
+        return [];
+      }
+
+      return this.firestore.data.collections.map(item => item.id);
     }
   },
   async mounted() {
-    const collections = await getCollectionIds();
-    console.log(collections);
-
-    this.SET_DATA_AT_PATH({
-      path: this.firestore.currentPath,
-      data: collections
-    });
+    await this.GET_COLLECTIONS(this.firestore.currentPath);
   },
   methods: {
+    ...mapActions([
+      GET_COLLECTIONS
+    ]),
     ...mapMutations([
       SET_CURRENT_PATH,
       SET_DATA_AT_PATH
