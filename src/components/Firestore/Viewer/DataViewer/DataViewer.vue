@@ -7,12 +7,30 @@
       class="data-viewer__panels flex-1">
       <CollectionsPanel
         class="data-viewer__panel"
-        :collection-ids="collectionIds"
-        @click:collection-item="handleCollectionItemClick" />
-      <DocumentsPanel
-        class="data-viewer__panel border-l border-navy-20" />
-      <FieldsPanel
-        class="data-viewer__panel border-l border-navy-20" />
+        path="/"
+        @click:collection-item="handleCollectionItemClick"
+        @click:start-collection="handleStartCollectionClick" />
+      <template
+        v-for="(part, index) in currentPathParts">
+        <template
+          v-if="index % 2">
+          <CollectionsPanel
+            :key="part"
+            :path="part"
+            class="data-viewer__panel" />
+        </template>
+        <template
+          v-else>
+          <DocumentsPanel
+            class="data-viewer__panel border-l border-navy-20"
+            :key="`doc-${part}`"
+            :path="part"
+            @click:document-item="handleDocumentItemClick" />
+          <FieldsPanel
+            :key="`doc-fields-${part}`"
+            class="data-viewer__panel border-l border-navy-20" />
+        </template>
+      </template>
     </Panels>
   </div>
 </template>
@@ -46,16 +64,23 @@ export default {
     ...mapState([
       'firestore'
     ]),
-    collectionIds() {
-      if (!this.firestore.data || !this.firestore.data.collections) {
-        return [];
-      }
-
-      return this.firestore.data.collections.map(item => item.id);
+    currentPathParts() {
+      return this.firestore.currentPath.split('/')
+        .filter(part => part)
+        .map((part, index, arr) => arr.slice(0, index).join('/') + '/' + part);
     }
   },
   async mounted() {
+    // console.log(this.firestore.currentPath);
     await this.GET_COLLECTIONS(this.firestore.currentPath);
+  },
+  watch: {
+    'firestore.currentPath'(newVal) {
+      console.log('current path', newVal);
+    },
+    currentPathParts(newVal) {
+      console.log('Matt', newVal);
+    }
   },
   methods: {
     ...mapActions([
@@ -67,11 +92,12 @@ export default {
     ]),
     async handleCollectionItemClick(id) {
       this.SET_CURRENT_PATH(id);
-
-      const path = this.firestore.currentPath;
-      const documents = await getDocuments(path);
-
-      console.log(documents);
+    },
+    async handleStartCollectionClick() {
+      console.log('start collection');
+    },
+    async handleDocumentItemClick(id) {
+      this.SET_CURRENT_PATH(id);
     }
   }
 }

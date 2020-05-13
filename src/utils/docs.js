@@ -1,9 +1,15 @@
+/**
+ * Gets the document ID from its full path. Example:
+ * /projects/your-project/databases/(default)/documents/your-collection/0IZudJrCwcUVFtI6Pg7Y
+ * @param {string} path Path.
+ * @return {string} Document ID.
+ */
 export const getDocIdFromPath = (path) => {
   if (!path) {
     return '';
   }
 
-  return path.split('/').pop();
+  return path.split('/').slice(-1)[0];
 };
 
 export const getDocParentCollectionFromPath = (path, id) => {
@@ -20,8 +26,8 @@ export const getDocParentCollectionFromPath = (path, id) => {
 /**
  * Takes an array of documents and sorts them into multiple arrays corresponding
  * to their parent collection defined in the name attribute.
- * @param {*[]} documents Array of documents.
- * @return {*[]} Array of collections containing documents.
+ * @param {Array} documents Array of documents.
+ * @return {Array} Array of collections containing documents.
  */
 export const generateCollectionsFromDocsList = (documents = []) => {
   if (Array.isArray(documents.documents)) {
@@ -49,4 +55,47 @@ export const generateCollectionsFromDocsList = (documents = []) => {
   }, []);
 
   return collections;
+}
+
+/**
+ * Takes a path like /<COLLECTION_IDS>/<DOCUMENT_ID> and traverses our data
+ * object, returning any data at that location.
+ * @param {string} path Path to locate data at.
+ * @param {Object} data Data object to traverse.
+ * @return {Array|Object|undefined} Located data.
+ */
+export const getDataAtPath = (path = '', data) => {
+  const getCollectionOrDocs = (d) => {
+    if (Object.prototype.hasOwnProperty.call(d, 'collections')) {
+      return d.collections;
+    } else {
+      return d.documents;
+    }
+  };
+
+  if (!data || !path) {
+    return;
+  }
+
+  if (path === '/') {
+    return getCollectionOrDocs(data);
+  }
+
+  const pathParts = path.split('/').filter(part => part);
+  let target = data;
+
+  for (let i = 0, len = pathParts.length; i < len; i++) {
+    const part = pathParts[i];
+
+    target = getCollectionOrDocs(target);
+
+    if (!target) {
+      return;
+    }
+
+    target = target.find(item => getDocIdFromPath(item.name) === part);
+    target = getCollectionOrDocs(target);
+  }
+
+  return target;
 }
