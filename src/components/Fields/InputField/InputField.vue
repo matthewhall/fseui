@@ -18,7 +18,7 @@
 
 <script>
 export default {
-  name: 'input',
+  name: 'InputField',
   props: {
     inputType: {
       type: String,

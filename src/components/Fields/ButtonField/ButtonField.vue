@@ -11,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Button',
+  name: 'ButtonField',
   props: {
     buttonType: {
       type: String,

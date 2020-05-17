@@ -8,7 +8,7 @@
       <CardContent>
         <form
           class="flex flex-col md:flex-row">
-          <Input
+          <InputField
             :model="settings.host"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
             label="Host"
@@ -16,7 +16,7 @@
             name="setting-input-host"
             :placeholder="settings.host"
             @update:model="(val) => applySetting('host', val)" />
-          <Input
+          <InputField
             :model="settings.port"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
             label="Port"
@@ -25,7 +25,7 @@
             input-type="number"
             :placeholder="settings.port"
             @update:model="(val) => applySetting('port', val)" />
-          <Input
+          <InputField
             :model="settings.projectId"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
             label="Project ID"
@@ -33,7 +33,7 @@
             name="setting-input-project-id"
             :placeholder="settings.projectId"
             @update:model="(val) => applySetting('projectId', val)" />
-          <Input
+          <InputField
             :model="settings.database"
             class="mb-5 md:mb-0 md:mr-5 md:flex-1"
             label="Database"
@@ -41,11 +41,11 @@
             name="setting-input-database"
             :placeholder="settings.database"
             @update:model="(val) => applySetting('database', val)" />
-          <Button
+          <ButtonField
             class="self-end"
             @click.prevent.native="go">
             Apply settings
-          </Button>
+          </ButtonField>
         </form>
       </CardContent>
     </Card>
@@ -55,20 +55,20 @@
 <script>
 import { mapState, mapActions } from 'vuex';
 
-import Button from '../../Button';
+import ButtonField from '../../Fields/ButtonField';
 import Card from '../../Card';
 import CardContent from '../../CardContent';
-import Input from '../../Fields/Input';
+import InputField from '../../Fields/InputField';
 
 import { APPLY_SETTINGS, GET_DOCUMENTS } from '../../../store/action-types.js';
 
 export default {
   name: 'SectionSettings',
   components: {
-    Button,
+    ButtonField,
     Card,
     CardContent,
-    Input
+    InputField
   },
   computed: {
     ...mapState([
