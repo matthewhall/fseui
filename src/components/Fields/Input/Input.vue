@@ -61,13 +61,14 @@ export default {
 <style lang="scss">
 .input {
   &__input {
-    box-shadow: 0 0 0 2px transparent inset, 0 0 0 1px theme('colors.grey.300') inset;
-    font-size: 13px;
+    box-shadow: 0 0 0 2px transparent inset,
+      0 0 0 1px theme('colors.grey.300') inset;
     padding: 8px;
     transition: box-shadow .15s;
 
     &:focus {
-      box-shadow: 0 0 0 2px theme('colors.blue') inset, 0 0 0 1px theme('colors.grey.300') inset;
+      box-shadow: 0 0 0 2px theme('colors.blue') inset,
+        0 0 0 1px theme('colors.grey.300') inset;
     }
   }
 }
