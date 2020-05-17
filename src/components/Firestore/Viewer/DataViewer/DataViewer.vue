@@ -4,7 +4,7 @@
     <Crumbs
       class="data-viewer__crumbs" />
     <Panels
-      class="data-viewer__panels flex-1">
+      class="data-viewer__panels flex-1 overflow-hidden">
       <CollectionsPanel
         class="data-viewer__panel"
         path="/"

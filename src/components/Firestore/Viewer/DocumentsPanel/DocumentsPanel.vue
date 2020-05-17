@@ -1,6 +1,6 @@
 <template>
   <div
-    class="documents-panel">
+    class="documents-panel overflow-y-auto h-full">
     <button
       class="block pt-3 pb-3 pr-6 pl-6"
       @click="handleAddDocumentClick">
