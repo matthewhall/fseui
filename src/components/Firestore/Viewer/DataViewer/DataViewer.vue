@@ -6,7 +6,7 @@
     <Panels
       class="data-viewer__panels flex-1 overflow-hidden">
       <CollectionsPanel
-        class="data-viewer__panel"
+        class="data-viewer__panel border-r border-navy-20"
         path="/"
         @click:collection-item="handleCollectionItemClick"
         @click:start-collection="handleStartCollectionClick" />
@@ -14,21 +14,18 @@
         v-for="(part, index) in currentPathParts">
         <template
           v-if="index % 2">
-          <CollectionsPanel
-            :key="part"
+          <FieldsPanel
+            :key="`doc-fields-${part}`"
             :path="part"
             class="data-viewer__panel" />
         </template>
         <template
           v-else>
           <DocumentsPanel
-            class="data-viewer__panel border-l border-navy-20"
+            class="data-viewer__panel border-r border-navy-20"
             :key="`doc-${part}`"
             :path="part"
             @click:document-item="handleDocumentItemClick" />
-          <FieldsPanel
-            :key="`doc-fields-${part}`"
-            class="data-viewer__panel border-l border-navy-20" />
         </template>
       </template>
     </Panels>
@@ -44,12 +41,9 @@ import CollectionsPanel from '../CollectionsPanel';
 import DocumentsPanel from '../DocumentsPanel';
 import FieldsPanel from '../FieldsPanel';
 
-import { GET_COLLECTIONS } from '../../../../store/action-types.js';
+import { GET_COLLECTIONS, PUSH_PATH } from '../../../../store/action-types.js';
 
-import {
-  SET_CURRENT_PATH,
-  SET_DATA_AT_PATH
-} from '../../../../store/mutation-types.js';
+import { SET_DATA_AT_PATH } from '../../../../store/mutation-types.js';
 
 export default {
   name: 'DataViewer',
@@ -65,39 +59,32 @@ export default {
       'firestore'
     ]),
     currentPathParts() {
+      // Builds the paths for each panel. E.g.:
+      // ['/collection', 'collection/docs', '/collection/docs/sub-collection']
       return this.firestore.currentPath.split('/')
         .filter(part => part)
         .map((part, index, arr) => arr.slice(0, index).join('/') + '/' + part);
     }
   },
   async mounted() {
-    // console.log(this.firestore.currentPath);
     await this.GET_COLLECTIONS(this.firestore.currentPath);
-  },
-  watch: {
-    'firestore.currentPath'(newVal) {
-      console.log('current path', newVal);
-    },
-    currentPathParts(newVal) {
-      console.log('Matt', newVal);
-    }
   },
   methods: {
     ...mapActions([
-      GET_COLLECTIONS
+      GET_COLLECTIONS,
+      PUSH_PATH
     ]),
     ...mapMutations([
-      SET_CURRENT_PATH,
       SET_DATA_AT_PATH
     ]),
     async handleCollectionItemClick(id) {
-      this.SET_CURRENT_PATH(id);
+      this.PUSH_PATH(id);
     },
     async handleStartCollectionClick() {
       console.log('start collection');
     },
     async handleDocumentItemClick(id) {
-      this.SET_CURRENT_PATH(id);
+      this.PUSH_PATH(id);
     }
   }
 }

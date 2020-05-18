@@ -58,21 +58,27 @@ export const generateCollectionsFromDocsList = (documents = []) => {
 }
 
 /**
+ * Checks an object for a collections of documents property and returns it if
+ * available.
+ * @param {Object} data Data object.
+ * @return {Object} Return data.
+ */
+export const getCollectionOrDocs = (data) => {
+  if (Object.prototype.hasOwnProperty.call(data, 'collections')) {
+    return data.collections;
+  } else {
+    return data.documents;
+  }
+};
+
+/**
  * Takes a path like /<COLLECTION_IDS>/<DOCUMENT_ID> and traverses our data
  * object, returning any data at that location.
  * @param {string} path Path to locate data at.
  * @param {Object} data Data object to traverse.
  * @return {Array|Object|undefined} Located data.
  */
-export const getDataAtPath = (path = '', data) => {
-  const getCollectionOrDocs = (d) => {
-    if (Object.prototype.hasOwnProperty.call(d, 'collections')) {
-      return d.collections;
-    } else {
-      return d.documents;
-    }
-  };
-
+export const getCollectionOrDocsAtPath = (path = '', data) => {
   if (!data || !path) {
     return;
   }
@@ -99,3 +105,22 @@ export const getDataAtPath = (path = '', data) => {
 
   return target;
 }
+
+/**
+ * Gets the doc data from a specified path.
+ * @param {string} path Path.
+ * @param {Object} data Data object to traverse.
+ * @return {Object} Return data.
+ */
+export const getDataAtPath = (path = '', data) => {
+  if (!data || !path) {
+    return;
+  }
+
+  const id = path.split('/').filter(part => part).pop();
+  const newPath = path.split('/').filter(part => part).slice(0, -1).join('/');
+  const items = getCollectionOrDocsAtPath(newPath, data);
+  const doc = items.find(item => getDocIdFromPath(item.name) === id);
+
+  return doc;
+};

@@ -1,21 +1,21 @@
 <template>
   <div
-    class="documents-panel overflow-y-auto h-full">
+    class="documents-panel overflow-y-auto">
     <button
       class="block pt-3 pb-3 pr-6 pl-6"
       @click="handleAddDocumentClick">
       Add document
     </button>
     <ul
-      v-if="documentIds.length">
+      v-if="documents.length">
       <li
-        v-for="id in documentIds"
-        :key="id"
+        v-for="doc in documents"
+        :key="doc.id"
         class="block font-mono">
         <button
           class="block pt-2 pb-2 pr-6 pl-6 hover:bg-grey-300 w-full text-left"
-          @click="() => handleItemClick(id)">
-          {{ id }}
+          @click="() => handleItemClick(doc.path)">
+          {{ doc.id }}
         </button>
       </li>
     </ul>
@@ -25,7 +25,10 @@
 <script>
 import { mapState } from 'vuex';
 
-import { getDataAtPath, getDocIdFromPath } from '../../../../utils/docs.js';
+import {
+  getCollectionOrDocsAtPath,
+  getDocIdFromPath
+} from '../../../../utils/docs.js';
 
 export default {
   name: 'DocumentsPanel',
@@ -39,12 +42,15 @@ export default {
     ...mapState([
       'firestore'
     ]),
-    documentIds() {
-      const documents = getDataAtPath(this.path, this.firestore.data) || [];
+    documents() {
+      const documents = getCollectionOrDocsAtPath(this.path, this.firestore.data) || [];
 
-      console.log(documents);
-
-      return documents.map(doc => getDocIdFromPath(doc.name));
+      return documents.map(doc => {
+        return {
+          id: getDocIdFromPath(doc.name),
+          path: doc.name
+        };
+      });
     }
   },
   methods: {

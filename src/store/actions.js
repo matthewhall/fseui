@@ -36,6 +36,17 @@ const actions = {
       return Promise.reject(err);
     }
   },
+  [actionTypes.GET_DATA_AT_PATH]: (context, payload) => {
+    console.log('---------------------------------------');
+    console.log(payload, context);
+    console.log(payload.split('/'));
+
+    let data = context.state.firestore.data;
+
+
+
+    return Promise.resolve(data);
+  },
   [actionTypes.APPLY_SETTINGS]: (context, payload) => {
     const settings = {
       ...context.state.settings,
@@ -45,6 +56,11 @@ const actions = {
     context.commit(mutationTypes.SET_SETTINGS, settings);
 
     return Promise.resolve(settings);
+  },
+  [actionTypes.PUSH_PATH]: (context, payload) => {
+    context.commit(mutationTypes.SET_CURRENT_PATH, payload);
+
+    return Promise.resolve(payload);
   }
 };
 

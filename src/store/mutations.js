@@ -7,7 +7,11 @@ import {
 
 const mutations = {
   [SET_CURRENT_PATH]: (state, payload) => {
-    state.firestore.currentPath = `/${payload}`;
+    const { database, projectId } = state.settings;
+    const basePath = `projects/${projectId}/databases/${database}/documents/`;
+    const path = payload.replace(basePath, '');
+
+    state.firestore.currentPath = `/${path}`;
   },
   [SET_DATA_AT_PATH]: (state, payload) => {
     const data = payload.data;
