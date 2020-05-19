@@ -11,11 +11,17 @@
       <li
         v-for="doc in documents"
         :key="doc.id"
-        class="block font-mono">
+        :class="{ 'bg-grey-200': doc.path === selected }"
+        class="block relative font-mono">
         <button
-          class="block pt-2 pb-2 pr-6 pl-6 hover:bg-grey-200 w-full text-left"
+          class="block pt-2 pb-2 pr-6 pl-6 hover:bg-grey-200 w-full text-left focus:outline-none"
           @click="() => handleItemClick(doc.path)">
           {{ doc.id }}
+          <IconBase
+            v-if="doc.path === selected"
+            class="documents-panel__icon">
+            <IconNavigateNext />
+          </IconBase>
         </button>
       </li>
     </ul>
@@ -25,6 +31,9 @@
 <script>
 import { mapState } from 'vuex';
 
+import IconBase from '../../../Icons/IconBase';
+import IconNavigateNext from '../../../Icons/IconNavigateNext';
+
 import {
   getCollectionOrDocsAtPath,
   getDocIdFromPath
@@ -32,11 +41,20 @@ import {
 
 export default {
   name: 'DocumentsPanel',
+  components: {
+    IconBase,
+    IconNavigateNext
+  },
   props: {
     path: {
       type: String,
       default: ''
     }
+  },
+  data() {
+    return {
+      selected: ''
+    };
   },
   computed: {
     ...mapState([
@@ -54,10 +72,25 @@ export default {
     }
   },
   methods: {
-    handleItemClick(id) {
-      this.$emit('click:document-item', id);
+    handleItemClick(path) {
+      this.$emit('click:document-item', path);
+      this.selected = path;
     },
-    handleAddDocumentClick() {},
+    handleAddDocumentClick() {}
+  },
+  beforeDestroy() {
+    this.selected = '';
   }
 }
 </script>
+
+<style lang="scss">
+.documents-panel {
+  &__icon {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+</style>
