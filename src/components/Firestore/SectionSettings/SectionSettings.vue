@@ -2,7 +2,7 @@
   <div>
     <h2
       class="mb-4 text-navy-300">
-      Firestore settings
+      Emulator settings
     </h2>
     <Card>
       <CardContent>

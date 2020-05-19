@@ -2,7 +2,7 @@
   <div
     class="collections-panel overflow-y-auto">
     <button
-      class="block pt-3 pb-3 pr-6 pl-6"
+      class="block pt-3 pb-3 pr-6 pl-6 hidden"
       @click="handleStartCollectionClick">
       Start collection
     </button>
@@ -13,7 +13,7 @@
         :key="collection.id"
         class="block font-mono">
         <button
-          class="block pt-2 pb-2 pr-6 pl-6 hover:bg-grey-300 w-full text-left"
+          class="block pt-2 pb-2 pr-6 pl-6 hover:bg-grey-200 w-full text-left"
           @click="() => handleItemClick(collection.path)">
           {{ collection.id }}
         </button>
@@ -48,7 +48,7 @@ export default {
           path: collection.name
         };
       });
-    }
+    },
   },
   methods: {
     handleItemClick(id) {
