@@ -7,7 +7,6 @@ export default {
   },
   firestore: {
     currentPath: '/',
-    data: undefined,
-    documents: []
+    data: undefined
   }
 }
