@@ -2,14 +2,18 @@
   <div
     class="db-node relative"
     :class="`db-node--${nodeType}`">
-    <DbNodeKeyValue
-      :node-key="nodeName"
-      :node-value="hasChildNodes ? '' : nodeData[key]"
-      :is-child-node="isChildNode" />
     <div
-      class="db-node__buttons">
-      <DbNodeType
-        :text="nodeType" />
+      class="db-node__click-area cursor-default">
+      <DbNodeKeyValue
+        :node-key="nodeName"
+        :node-value="hasChildNodes ? '' : nodeData[key]"
+        :node-type="nodeType"
+        :is-child-node="isChildNode" />
+      <div
+        class="db-node__buttons">
+        <DbNodeType
+          :text="nodeType" />
+      </div>
     </div>
     <DbNodeChildren
       v-if="hasChildNodes"
@@ -22,14 +26,23 @@ import DbNodeChildren from '../DbNodeChildren';
 import DbNodeKeyValue from '../DbNodeKeyValue';
 import DbNodeType from '../DbNodeType';
 
+/** Maps the field key name from the API request to a display type. */
 const dBKeyToTypeMapping = {
   arrayValue: 'array',
+  booleanValue: 'boolean',
+  geoPointValue: 'geopoint',
   integerValue: 'int',
-  stringValue: 'string'
+  mapValue: 'map',
+  nullValue: 'null',
+  referenceValue: 'reference',
+  stringValue: 'string',
+  timestampValue: 'timestamp'
 };
 
+/** Defines which field types can have children. */
 const hasChildNodeTypes = [
-  dBKeyToTypeMapping.arrayValue
+  dBKeyToTypeMapping.arrayValue,
+  dBKeyToTypeMapping.mapValue
 ];
 
 export default {
@@ -64,7 +77,8 @@ export default {
       return hasChildNodeTypes.includes(this.nodeType);
     },
     childNodes() {
-      return this.hasChildNodes ? this.nodeData[this.key].values : [];
+      return this.hasChildNodes ? (this.nodeData[this.key].values ||
+        this.nodeData[this.key].fields) : [];
     }
   }
 }
@@ -74,10 +88,13 @@ export default {
 .db-node {
   $base: &;
 
-  &:hover,
-  &:focus {
-    > #{$base}__buttons {
-      display: flex;
+  // Click area will be converted to a button when field updating is done.
+  &__click-area {
+    &:hover,
+    &:focus {
+      > #{$base}__buttons {
+        display: flex;
+      }
     }
   }
 
