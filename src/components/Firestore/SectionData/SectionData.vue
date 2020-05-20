@@ -15,7 +15,7 @@
       class="text-navy-300 mt-20">
       <p
         class="text-center">
-        No data. Enter your emulator settings and click Apply.
+        No data. Enter your emulator settings and make sure your emulator is running.
       </p>
     </div>
   </div>
