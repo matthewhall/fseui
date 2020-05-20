@@ -1,12 +1,23 @@
 <template>
   <div>
-    <h2
-      class="mb-4 text-navy-300">
-      Data
-    </h2>
-    <Card>
-      <DataViewer />
-    </Card>
+    <template
+      v-if="firestore.data && firestore.data.collections.length">
+      <h2
+        class="mb-4 text-navy-300">
+        Data
+      </h2>
+      <Card>
+        <DataViewer />
+      </Card>
+    </template>
+    <div
+      v-else
+      class="text-navy-300 mt-20">
+      <p
+        class="text-center">
+        No data. Enter your emulator settings and click Apply.
+      </p>
+    </div>
   </div>
 </template>
 
