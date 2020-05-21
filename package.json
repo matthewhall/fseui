@@ -1,16 +1,16 @@
 {
   "name": "fseui",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": false,
   "license": "MIT",
   "author": "Matt Hall",
-  "homepage": "https://github.com/matthewhall/fsui#readme",
+  "homepage": "https://github.com/matthewhall/fseui#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/matthewhall/fsui.git"
+    "url": "git+https://github.com/matthewhall/fseui.git"
   },
   "bugs": {
-    "url": "https://github.com/matthewhall/fsui/issues"
+    "url": "https://github.com/matthewhall/fseui/issues"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
