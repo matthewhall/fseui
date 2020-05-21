@@ -18,7 +18,7 @@ Ensure your Firestore emulator is running then:
 $ fseui
 ```
 
-The emulator UI will run on `9000` by default but you can adjust this by setting supplying a `--port` argument.
+The emulator UI will run on `9000` by default but you can adjust this by setting the `--port` argument.
 
 #### Firestore rules
 
