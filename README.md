@@ -1,4 +1,4 @@
-# fsui
+# fseui
 
 A Firestore Emulator UI.
 
@@ -7,7 +7,7 @@ A Firestore Emulator UI.
 ### Install
 
 ```
-$ npm install fsui
+$ npm install fseui
 ```
 
 ### Usage
@@ -15,7 +15,7 @@ $ npm install fsui
 Ensure your Firestore emulator is running then:
 
 ```
-$ fsui
+$ fseui
 ```
 
 The emulator UI will run on `9000` by default but you can adjust this by setting supplying a `--port` argument.
