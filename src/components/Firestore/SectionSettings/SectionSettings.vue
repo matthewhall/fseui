@@ -60,7 +60,11 @@ import Card from '../../Card';
 import CardContent from '../../CardContent';
 import InputField from '../../Fields/InputField';
 
-import { APPLY_SETTINGS, GET_COLLECTIONS } from '../../../store/action-types.js';
+import {
+  APPLY_SETTINGS,
+  GET_SETTINGS,
+  GET_COLLECTIONS
+} from '../../../store/action-types.js';
 
 export default {
   name: 'SectionSettings',
@@ -79,7 +83,8 @@ export default {
   methods: {
     ...mapActions([
       APPLY_SETTINGS,
-      GET_COLLECTIONS,
+      GET_SETTINGS,
+      GET_COLLECTIONS
     ]),
     async go() {
       await this.GET_COLLECTIONS(this.firestore.currentPath);
@@ -88,7 +93,9 @@ export default {
       await this.APPLY_SETTINGS({ [key]: val });
     }
   },
-  created() {
+  async created() {
+    await this.GET_SETTINGS();
+
     if (this.settings.host && this.settings.port && this.settings.projectId) {
       this.go();
     }

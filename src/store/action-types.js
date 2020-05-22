@@ -1,5 +1,6 @@
 export const GET_COLLECTIONS = 'GET_COLLECTIONS';
 export const GET_DOCUMENTS = 'GET_DOCUMENTS';
 export const APPLY_SETTINGS = 'APPLY_SETTINGS';
+export const GET_SETTINGS = 'GET_SETTINGS';
 export const PUSH_PATH = 'PUSH_PATH';
 export const GET_DATA_AT_PATH = 'GET_DATA_AT_PATH';
