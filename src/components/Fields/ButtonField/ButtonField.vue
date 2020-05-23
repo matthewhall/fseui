@@ -1,6 +1,7 @@
 <template>
   <button
     class="button rounded-lg font-medium tracking-wide pt-2 pb-2 pr-4 pl-4 outline-none"
+    :type="type"
     :class="{
       'bg-blue text-white': buttonType === 'primary',
       'text-grey-600 hover:bg-grey-200': buttonType === 'secondary'
@@ -16,6 +17,10 @@ export default {
     buttonType: {
       type: String,
       default: 'primary'
+    },
+    type: {
+      type: String,
+      default: ''
     }
   }
 }

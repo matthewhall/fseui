@@ -7,7 +7,8 @@
     <Card>
       <CardContent>
         <form
-          class="flex flex-col md:flex-row">
+          class="flex flex-col md:flex-row"
+          @submit="go">
           <InputField
             :model="settings.host"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
@@ -43,7 +44,7 @@
             @update:model="(val) => applySetting('database', val)" />
           <ButtonField
             class="self-end"
-            @click.prevent.native="go">
+            type="submit">
             Apply settings
           </ButtonField>
         </form>
