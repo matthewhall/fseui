@@ -3,11 +3,13 @@
     class="input">
     <label
       class="input__label block mb-1 text-grey-600"
+      :class="{ 'sr-only': hideLabel }"
       :for="id">
       {{ label }}
     </label>
     <input
-      class="input__input rounded text-lg leading-none w-full outline-none"
+      class="input__input"
+      :class="inputClasses"
       v-model="internalModel"
       :type="inputType"
       :name="name"
@@ -43,6 +45,14 @@ export default {
     placeholder: {
       type: [String, Number],
       default: ''
+    },
+    hideLabel: {
+      type: Boolean,
+      default: false
+    },
+    inputClasses: {
+      type: String,
+      default: 'rounded text-lg leading-none w-full outline-none'
     }
   },
   computed: {

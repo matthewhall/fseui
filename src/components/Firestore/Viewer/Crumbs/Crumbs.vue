@@ -1,8 +1,9 @@
 <template>
   <div
-    class="crumbs bg-grey-50 border-b border-navy-20">
+    class="crumbs bg-grey-50 rounded-t-lg border-b border-navy-20 relative">
     <ul
-      class="flex pl-6 pr-6 pt-5 pb-4 overflow-hidden">
+      class="flex pl-6 pr-6 pt-5 pb-4 overflow-hidden"
+      @click="isEditPathVisible = true">
       <li
         v-for="(crumb, index) in crumbs"
         :key="crumb"
@@ -15,6 +16,10 @@
           :index="index" />
       </li>
     </ul>
+    <EditPath
+      v-show="isEditPathVisible"
+      v-model="isEditPathVisible"
+      class="absolute inset-0 bg-white rounded-t-lg" />
   </div>
 </template>
 
@@ -22,11 +27,18 @@
 import { mapState } from 'vuex';
 
 import Crumb from '../Crumb';
+import EditPath from '../EditPath';
 
 export default {
   name: 'Crumbs',
   components: {
-    Crumb
+    Crumb,
+    EditPath
+  },
+  data() {
+    return {
+      isEditPathVisible: false
+    };
   },
   computed: {
     ...mapState([
