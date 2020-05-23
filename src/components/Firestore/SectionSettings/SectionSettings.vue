@@ -86,19 +86,26 @@ export default {
       GET_SETTINGS,
       GET_COLLECTIONS
     ]),
+    /**
+     * Get the the initial collections.
+     */
     async go() {
-      await this.GET_COLLECTIONS(this.firestore.currentPath);
+      if (this.settings.host && this.settings.port && this.settings.projectId) {
+        await this.GET_COLLECTIONS(this.firestore.currentPath);
+      }
     },
+    /**
+     * Applies a new setting to the store.
+     * @param {string} key Setting key.
+     * @param {string} val Setting Value.
+     */
     async applySetting(key, val) {
       await this.APPLY_SETTINGS({ [key]: val });
     }
   },
   async created() {
     await this.GET_SETTINGS();
-
-    if (this.settings.host && this.settings.port && this.settings.projectId) {
-      this.go();
-    }
+    await this.go();
   }
 }
 </script>

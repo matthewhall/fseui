@@ -1,5 +1,4 @@
 import {
-  SET_DOCUMENTS,
   SET_DATA_AT_PATH,
   SET_CURRENT_PATH,
   SET_SETTINGS
@@ -37,9 +36,6 @@ const mutations = {
     }
 
     state.firestore.data = target;
-  },
-  [SET_DOCUMENTS]: (state, payload) => {
-    state.firestore.documents = payload;
   },
   [SET_SETTINGS]: (state, payload) => {
     state.settings = payload;

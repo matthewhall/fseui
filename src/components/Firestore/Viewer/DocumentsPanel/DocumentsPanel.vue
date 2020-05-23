@@ -61,7 +61,8 @@ export default {
       'firestore'
     ]),
     documents() {
-      const documents = getCollectionOrDocsAtPath(this.path, this.firestore.data) || [];
+      const documents =
+        getCollectionOrDocsAtPath(this.path, this.firestore.data) || [];
 
       return documents.map(doc => {
         return {
@@ -72,6 +73,10 @@ export default {
     }
   },
   methods: {
+    /**
+     * Emits a custom event when an item is clicked passing it the item's path.
+     * @param {string} path Path.
+     */
     handleItemClick(path) {
       this.$emit('click:document-item', path);
       this.selected = path;

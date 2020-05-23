@@ -26,7 +26,7 @@ import DbNodeChildren from '../DbNodeChildren';
 import DbNodeKeyValue from '../DbNodeKeyValue';
 import DbNodeType from '../DbNodeType';
 
-/** Maps the field key name from the API request to a display type. */
+// Maps the field key name from the API request to a display type.
 const dBKeyToTypeMapping = {
   arrayValue: 'array',
   booleanValue: 'boolean',
@@ -39,7 +39,7 @@ const dBKeyToTypeMapping = {
   timestampValue: 'timestamp'
 };
 
-/** Defines which field types can have children. */
+// Defines which field types can have children.
 const hasChildNodeTypes = [
   dBKeyToTypeMapping.arrayValue,
   dBKeyToTypeMapping.mapValue

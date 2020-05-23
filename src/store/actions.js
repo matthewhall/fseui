@@ -5,6 +5,12 @@ import { getCollections } from '../services/firestore-api.js';
 import { getSettings, saveSettings } from '../services/settings-api.js';
 
 const actions = {
+  /**
+   * Get collections at a path from the API and commit them to the store.
+   * @param {Object} context Context object.
+   * @param {string} payload Path payload.
+   * @return {Promise<Object>} Returned collections.
+   */
   [actionTypes.GET_COLLECTIONS]: async (context, payload) => {
     try {
       const collections = await getCollections(payload);
@@ -55,6 +61,12 @@ const actions = {
     // eslint-disable-next-line no-empty
     } catch (err) {}
   },
+  /**
+   * Sets the current Firestore path in the store.
+   * @param {Object} context Context object.
+   * @param {string} payload Path payload.
+   * @return {Promise<string>} Returned path string.
+   */
   [actionTypes.PUSH_PATH]: (context, payload) => {
     context.commit(mutationTypes.SET_CURRENT_PATH, payload);
 

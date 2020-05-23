@@ -12,20 +12,29 @@ export const getDocIdFromPath = (path) => {
   return path.split('/').slice(-1)[0];
 };
 
-export const getDocParentCollectionFromPath = (path, id) => {
-  if (!path || !id) {
-    return '';
-  }
-
-  const parts = path.split('/');
-  const index = parts.findIndex(part => part === id);
-
-  return parts[index - 1];
-}
-
 /**
  * Takes an array of documents and sorts them into multiple arrays corresponding
  * to their parent collection defined in the name attribute.
+ *
+ * For example an array of document objects with name values like this:
+ *  - /projects/project/databases/(default)/documents/collection-1/1
+ *  - /projects/project/databases/(default)/documents/collection-1/2
+ *  - /projects/project/databases/(default)/documents/collection-1/3
+ *  - /projects/project/databases/(default)/documents/collection-2/1
+ *
+ * Will be returned as:
+ * [
+ *   {
+ *     id: 'collection-1',
+ *     documents: [{ 1 }, { 2 }, { 3 }],
+ *     name: '/projects/project/databases/(default)/documents/collection-1'
+ *   },
+ *   {
+ *     id: 'collection-2',
+ *     documents: [{ 1 }],
+ *     name: '/projects/project/databases/(default)/documents/collection-2'
+ *   }
+ * ]
  * @param {Array} documents Array of documents.
  * @return {Array} Array of collections containing documents.
  */

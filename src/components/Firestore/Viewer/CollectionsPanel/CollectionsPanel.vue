@@ -69,10 +69,18 @@ export default {
     },
   },
   methods: {
+    /**
+     * Emits a custom event when an item is clicked passing it the item's path.
+     * @param {string} path Path.
+     */
     handleItemClick(path) {
       this.$emit('click:collection-item', path);
       this.selected = path;
     },
+    /**
+     * Emits an event when the start collection button is clicked to notify
+     * parent components.
+     */
     handleStartCollectionClick() {
       this.$emit('click:start-collection');
     }

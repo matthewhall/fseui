@@ -31,6 +31,7 @@ export default {
       const type = this.nodeType;
       const val = this.nodeValue;
       const { database, projectId } = this.settings;
+      // @TODO: Move this to a getter.
       const basePath = `projects/${projectId}/databases/${database}/documents`;
       let newVal;
 

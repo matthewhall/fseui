@@ -1,5 +1,10 @@
 const getters = {
-  baseApiPath: (state) => {
+  /**
+   * Constructs the base API URL from settings in the store.
+   * @param {Object} state State object.
+   * @return {string} Returned API URL.
+   */
+  baseApiUrl: (state) => {
     const { host, port, projectId } = state.settings;
 
     if (!host || !port || !projectId) {

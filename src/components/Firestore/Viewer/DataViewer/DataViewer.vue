@@ -8,7 +8,7 @@
       <CollectionsPanel
         class="data-viewer__panel border-r border-navy-20"
         path="/"
-        @click:collection-item="handleCollectionItemClick"
+        @click:collection-item="handleItemClick"
         @click:start-collection="handleStartCollectionClick" />
       <template
         v-for="(part, index) in currentPathParts">
@@ -25,7 +25,7 @@
             class="data-viewer__panel border-r border-navy-20"
             :key="`doc-${part}`"
             :path="part"
-            @click:document-item="handleDocumentItemClick" />
+            @click:document-item="handleItemClick" />
         </template>
       </template>
     </Panels>
@@ -77,14 +77,16 @@ export default {
     ...mapMutations([
       SET_DATA_AT_PATH
     ]),
-    async handleCollectionItemClick(id) {
-      this.PUSH_PATH(id);
+    /**
+     * Pushes the new path to the store when a collection or document clicked
+     * event is received.
+     * @param {param} path New path.
+     */
+    async handleItemClick(path) {
+      await this.PUSH_PATH(path);
     },
     async handleStartCollectionClick() {
       console.log('start collection');
-    },
-    async handleDocumentItemClick(id) {
-      this.PUSH_PATH(id);
     }
   }
 }
