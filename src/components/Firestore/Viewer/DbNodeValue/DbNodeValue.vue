@@ -8,6 +8,7 @@
 
 <script>
 import { mapState } from 'vuex';
+import { format } from 'date-fns';
 
 import { genLatLonDisplayValue } from '../../../../utils/geopoint.js';
 
@@ -47,6 +48,9 @@ export default {
           break;
         case 'reference':
           newVal = val.replace(basePath, '');
+          break;
+        case 'timestamp':
+          newVal = format(new Date(val), 'dd MMM yyyy HH:mm:ss O');
           break;
         case 'null':
           newVal = 'null';
