@@ -9,18 +9,27 @@
     </label>
     <input
       class="input__input"
+      spellcheck="false"
+      v-model="internalValue"
       :class="inputClasses"
-      v-model="internalModel"
       :type="inputType"
       :name="name"
       :id="id"
-      :placeholder="placeholder" />
+      :placeholder="placeholder"
+      @blur="(event) => $emit('blur', event)"
+      @change="(event) => $emit('change', event)"
+      @focus="(event) => $emit('focus', event)"
+      @keydown="(event) => $emit('keydown', event)" />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'InputField',
+  name: 'TextField',
+  mode: {
+    prop: 'value',
+    event: 'input'
+  },
   props: {
     inputType: {
       type: String,
@@ -38,10 +47,6 @@ export default {
       type: String,
       required: true
     },
-    model: {
-      type: [String, Number, Object, Array, Boolean],
-      default: undefined
-    },
     placeholder: {
       type: [String, Number],
       default: ''
@@ -53,15 +58,24 @@ export default {
     inputClasses: {
       type: String,
       default: 'rounded text-lg leading-none w-full outline-none'
+    },
+    value: {
+      type: [String, Number, Boolean],
+      required: true
+    }
+  },
+  watch: {
+    value() {
+      this.$emit('input', this.value);
     }
   },
   computed: {
-    internalModel: {
+    internalValue: {
       get() {
-        return this.model;
+        return this.value;
       },
       set(val) {
-        this.$emit('update:model', val);
+        this.$emit('input', val);
       }
     }
   }

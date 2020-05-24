@@ -17,7 +17,7 @@
       </li>
     </ul>
     <EditPath
-      v-show="isEditPathVisible"
+      v-if="isEditPathVisible"
       v-model="isEditPathVisible"
       class="absolute inset-0 bg-white rounded-t-lg" />
   </div>

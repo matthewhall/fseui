@@ -68,9 +68,16 @@ const actions = {
    * @return {Promise<string>} Returned path string.
    */
   [actionTypes.PUSH_PATH]: (context, payload) => {
-    context.commit(mutationTypes.SET_CURRENT_PATH, payload);
+    const { basePath } = context.getters;
+    let path = payload.replace(basePath, '');
 
-    return Promise.resolve(payload);
+    if (!path.startsWith('/')) {
+      path = `/${path}`;
+    }
+
+    context.commit(mutationTypes.SET_CURRENT_PATH, path);
+
+    return Promise.resolve(path);
   }
 };
 

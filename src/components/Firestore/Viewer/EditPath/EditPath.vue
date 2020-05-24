@@ -1,18 +1,19 @@
 <template>
   <div
-    class="edit-path flex items-stretch">
+    class="edit-path flex items-stretch shadow-md">
     <div
       class="flex-1">
-      <InputField
+      <TextField
+        v-model="internalCurrentPath"
         class="h-full"
         label="Update current path"
         id="update-current-path"
         input-classes="edit-path__input h-full w-full text-md rounded-tl-lg outline-none"
-        :model="currentPath"
-        :hide-label="true" />
+        :hide-label="true"
+        @keydown="handleTextKeyDown" />
     </div>
     <button
-      class="edit-path__close p-4"
+      class="edit-path__close p-4 text-grey-600 hover:text-black focus:text-black focus:outline-none"
       aria-label="Close"
       @click="handleCloseClick">
       <IconBase
@@ -24,45 +25,91 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 
 import IconBase from '../../../Icons/IconBase';
 import IconClose from '../../../Icons/IconClose';
-import InputField from '../../../Fields/InputField';
+import TextField from '../../../Fields/TextField';
+
+import { PUSH_PATH } from '../../../../store/action-types.js';
+
+import { Keys } from '../../../../constants.js';
 
 export default {
   name: 'EditPath',
   components: {
     IconBase,
     IconClose,
-    InputField
+    TextField
   },
   model: {
     prop: 'isVisible',
     event: 'update:is-visible'
   },
+  props: {
+    isVisible: {
+      type: Boolean,
+      default: false
+    }
+  },
+  data() {
+    return {
+      internalCurrentPath: ''
+    };
+  },
   computed: {
     ...mapState([
       'firestore'
     ]),
-    currentPath: {
-      get() {
-        return this.firestore.currentPath;
-      },
-      set(val) {
-        console.log(val);
-      }
-    }
+    ...mapGetters([
+      'basePath'
+    ])
   },
   methods: {
+    ...mapActions([
+      PUSH_PATH
+    ]),
     /**
-     * Closes hides the edit path component and resets any changes made to the
-     * current path.
+     * Closes the edit path component and resets any changes made to the current
+     * path.
+     * @param {MouseEvent|KeyboardEvent} event Event object.
      */
-    handleCloseClick() {
+    handleCloseClick(event) {
+      if (event.type === 'keydown' && event.key !== Keys.ESC) {
+        return;
+      }
+
       this.$emit('update:is-visible', false);
-      this.currentPath = this.firestore.currentPath;
+      this.internalCurrentPath = this.firestore.currentPath;
+    },
+    /**
+     * Handle input field keydown events.
+     * @param {KeyboardEvent} event Keyboard event.
+     */
+    handleTextKeyDown(event) {
+      if (event.key !== Keys.ENTER) {
+        return;
+      }
+
+      const path = this.internalCurrentPath;
+
+      this.PUSH_PATH(path);
+      this.$emit('update:is-visible', false);
     }
+  },
+  mounted() {
+    document.addEventListener('keydown', this.handleCloseClick);
+
+    this.internalCurrentPath = this.firestore.currentPath;
+
+    const el = this.$el.querySelector('input[type="text"');
+
+    if (el) {
+      el.select();
+    }
+  },
+  beforeDestroy() {
+    document.removeEventListener('keydown', this.handleCloseClick);
   }
 }
 </script>
@@ -72,6 +119,10 @@ export default {
   &__input {
     box-shadow: none;
     padding-left: 1rem;
+
+    &:focus {
+      box-shadow: none;
+    }
   }
 }
 </style>
