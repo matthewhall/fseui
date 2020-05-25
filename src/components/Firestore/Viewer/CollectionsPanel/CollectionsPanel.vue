@@ -8,22 +8,13 @@
     </button>
     <ul
       v-if="collections.length">
-      <li
+      <PanelItem
         v-for="collection in collections"
         :key="collection.id"
-        :class="{ 'bg-grey-200': collection.path === selected }"
-        class="block relative font-mono">
-        <button
-          class="block pt-2 pb-2 pr-6 pl-6 hover:bg-grey-200 w-full text-left focus:outline-none"
-          @click="() => handleItemClick(collection.path)">
-          {{ collection.id }}
-          <IconBase
-            v-if="collection.path === selected"
-            class="collections-panel__icon">
-            <IconNavigateNext />
-          </IconBase>
-        </button>
-      </li>
+        :text="collection.id"
+        :path="collection.path"
+        :selected="selected"
+        @click:panel-item="handleItemClick" />
     </ul>
   </div>
 </template>
@@ -31,16 +22,14 @@
 <script>
 import { mapState } from 'vuex';
 
-import IconBase from '../../../Icons/IconBase';
-import IconNavigateNext from '../../../Icons/IconNavigateNext';
+import PanelItem from '../PanelItem';
 
 import { getCollectionOrDocsAtPath } from '../../../../utils/docs.js';
 
 export default {
   name: 'CollectionsPanel',
   components: {
-    IconBase,
-    IconNavigateNext
+    PanelItem
   },
   props: {
     path: {
@@ -58,7 +47,8 @@ export default {
       'firestore'
     ]),
     collections() {
-      const collections = getCollectionOrDocsAtPath(this.path, this.firestore.data) || [];
+      const collections = getCollectionOrDocsAtPath(this.path,
+        this.firestore.data) || [];
 
       return collections.map(collection => {
         return {
@@ -90,14 +80,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.collections-panel {
-  &__icon {
-    position: absolute;
-    right: 6px;
-    top: 50%;
-    transform: translateY(-50%);
-  }
-}
-</style>
