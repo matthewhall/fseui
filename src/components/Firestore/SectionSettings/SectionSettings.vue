@@ -8,40 +8,40 @@
       <CardContent>
         <form
           class="flex flex-col md:flex-row"
-          @submit="go">
-          <InputField
-            :model="settings.host"
+          @submit.prevent="go">
+          <TextField
+            v-model="internalSettings.host"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
             label="Host"
             id="setting-input-host"
             name="setting-input-host"
-            :placeholder="settings.host"
-            @update:model="(val) => applySetting('host', val)" />
-          <InputField
-            :model="settings.port"
+            :placeholder="internalSettings.host"
+            @input="(val) => applySetting('host', val)" />
+          <TextField
+            v-model="internalSettings.port"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
             label="Port"
             id="setting-input-port"
             name="setting-input-port"
             input-type="number"
-            :placeholder="settings.port"
-            @update:model="(val) => applySetting('port', val)" />
-          <InputField
-            :model="settings.projectId"
+            :placeholder="internalSettings.port"
+            @input="(val) => applySetting('port', val)" />
+          <TextField
+            v-model="internalSettings.projectId"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
             label="Project ID"
             id="setting-input-project-id"
             name="setting-input-project-id"
-            :placeholder="settings.projectId"
-            @update:model="(val) => applySetting('projectId', val)" />
-          <InputField
-            :model="settings.database"
+            :placeholder="internalSettings.projectId"
+            @input="(val) => applySetting('projectId', val)" />
+          <TextField
+            v-model="internalSettings.database"
             class="mb-5 md:mb-0 md:mr-5 md:flex-1"
             label="Database"
             id="setting-input-database"
             name="setting-input-database"
-            :placeholder="settings.database"
-            @update:model="(val) => applySetting('database', val)" />
+            :placeholder="internalSettings.database"
+            @input="(val) => applySetting('database', val)" />
           <ButtonField
             class="self-end"
             type="submit">
@@ -59,7 +59,7 @@ import { mapState, mapActions } from 'vuex';
 import ButtonField from '../../Fields/ButtonField';
 import Card from '../../Card';
 import CardContent from '../../CardContent';
-import InputField from '../../Fields/InputField';
+import TextField from '../../Fields/TextField';
 
 import {
   APPLY_SETTINGS,
@@ -73,13 +73,21 @@ export default {
     ButtonField,
     Card,
     CardContent,
-    InputField
+    TextField
   },
   computed: {
     ...mapState([
       'firestore',
       'settings'
-    ])
+    ]),
+    internalSettings: {
+      get() {
+        return { ...this.settings };
+      },
+      set(val) {
+        this.$emit('update:settings', val);
+      }
+    }
   },
   methods: {
     ...mapActions([
@@ -91,7 +99,8 @@ export default {
      * Get the the initial collections.
      */
     async go() {
-      if (this.settings.host && this.settings.port && this.settings.projectId) {
+      if (this.internalSettings.host && this.internalSettings.port
+          && this.internalSettings.projectId) {
         await this.GET_COLLECTIONS(this.firestore.currentPath);
       }
     },

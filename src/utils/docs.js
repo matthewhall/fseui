@@ -70,13 +70,19 @@ export const generateCollectionsFromDocsList = (documents = []) => {
  * Checks an object for a collections of documents property and returns it if
  * available.
  * @param {Object} data Data object.
- * @return {Object} Return data.
+ * @return {Object|undefined} Return data.
  */
 export const getCollectionOrDocs = (data) => {
+  if (!data) {
+    return;
+  }
+
   if (Object.prototype.hasOwnProperty.call(data, 'collections')) {
     return data.collections;
-  } else {
+  } else if (Object.prototype.hasOwnProperty.call(data, 'documents')) {
     return data.documents;
+  } else {
+    return;
   }
 };
 

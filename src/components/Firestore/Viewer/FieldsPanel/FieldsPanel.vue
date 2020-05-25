@@ -39,6 +39,10 @@ export default {
       'firestore'
     ]),
     orderedFields() {
+      if (!this.data.fields) {
+        return [];
+      }
+
       const fields = Object.entries(this.data.fields).sort((a, b) => {
         if (a[0] < b[0]) {
           return -1;
