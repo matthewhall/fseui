@@ -8,7 +8,7 @@
       <CardContent>
         <form
           class="flex flex-col md:flex-row"
-          @submit="go">
+          @submit.prevent="go">
           <TextField
             v-model="internalSettings.host"
             class="mb-3 md:mb-0 md:mr-5 md:flex-1"
