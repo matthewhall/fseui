@@ -1,5 +1,6 @@
 <template>
   <div
+    id="edit-path"
     class="edit-path flex items-stretch shadow-md">
     <div
       class="flex-1">
@@ -13,9 +14,11 @@
         @keydown="handleTextKeyDown" />
     </div>
     <button
+      ref="close"
       class="edit-path__close p-4 text-grey-600 hover:text-black focus:text-black focus:outline-none"
+      aria-controls="edit-path"
       aria-label="Close"
-      @click="handleCloseClick">
+      @click.stop="handleCloseClick">
       <IconBase
         class="edit-path__close-icon">
         <IconClose />
@@ -49,7 +52,7 @@ export default {
   props: {
     isVisible: {
       type: Boolean,
-      default: false
+      required: true
     }
   },
   data() {
@@ -79,6 +82,12 @@ export default {
         return;
       }
 
+      if (event.type === 'click' && this.$el.contains(event.target) &&
+          // Don't return if the click is from the Close button.
+          !this.$refs.close.contains(event.target)) {
+        return;
+      }
+
       this.$emit('update:is-visible', false);
       this.internalCurrentPath = this.firestore.currentPath;
     },
@@ -98,9 +107,10 @@ export default {
     }
   },
   mounted() {
-    document.addEventListener('keydown', this.handleCloseClick);
-
     this.internalCurrentPath = this.firestore.currentPath;
+
+    document.addEventListener('keydown', this.handleCloseClick);
+    document.addEventListener('click', this.handleCloseClick);
 
     const el = this.$el.querySelector('input[type="text"');
 
@@ -110,6 +120,7 @@ export default {
   },
   beforeDestroy() {
     document.removeEventListener('keydown', this.handleCloseClick);
+    document.removeEventListener('click', this.handleCloseClick);
   }
 }
 </script>
