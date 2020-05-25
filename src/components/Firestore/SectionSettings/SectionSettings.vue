@@ -98,7 +98,7 @@ export default {
     /**
      * Get the the initial collections.
      */
-    async go(event) {
+    async go() {
       if (this.internalSettings.host && this.internalSettings.port
           && this.internalSettings.projectId) {
         await this.GET_COLLECTIONS(this.firestore.currentPath);
