@@ -2,7 +2,7 @@
 
 A Firestore Emulator UI.
 
-> ⚠️ Coincidentally, on the same day I released this package, the Firebase team released firebase-tools 8.4.0 which now includes a local emulator suite. See the release notes [here](https://github.com/firebase/firebase-tools/releases/tag/v8.4.0). You should use that instead.
+> ⚠️ Coincidentally, on the same day I released this package, the Firebase team also released `firebase-tools` 8.4.0 which now includes a local emulator suite. See the release notes [here](https://github.com/firebase/firebase-tools/releases/tag/v8.4.0). You should use that instead.
 
 ## Getting started
 
