@@ -22,7 +22,7 @@ The emulator UI will run on `9000` by default but you can adjust this by setting
 
 #### Firestore rules
 
-This app does nothing fancy when it comes to getting around any rules you have set in your `firestore.rules` file yet; just rename it or comment these out for now.
+This app does nothing fancy when it comes to getting around any rules you have set in your `firestore.rules` file yet; just rename it or comment them out for now.
 
 ## Limitations
 
