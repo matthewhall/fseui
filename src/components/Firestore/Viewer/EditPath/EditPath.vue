@@ -9,6 +9,7 @@
         class="h-full"
         label="Update current path"
         id="update-current-path"
+        name="update-current-path"
         input-classes="edit-path__input h-full w-full text-md rounded-tl-lg outline-none"
         :hide-label="true"
         @keydown="handleTextKeyDown" />
@@ -112,10 +113,13 @@ export default {
     document.addEventListener('keydown', this.handleCloseClick);
     document.addEventListener('click', this.handleCloseClick);
 
-    const el = this.$el.querySelector('input[type="text"');
+    const el = this.$el.querySelector('input[type="text"]');
 
     if (el) {
-      el.select();
+      this.$nextTick(() => {
+        el.focus();
+        el.select();
+      });
     }
   },
   beforeDestroy() {
